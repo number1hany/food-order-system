@@ -26,7 +26,43 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <dependencyManagement/>
+  <!-- 하위 모듈 버전 통합 관리 -->
+  <dependencyManagement>
+    <dependencies>
+      <!-- order 정의 -->
+      <dependency>
+        <groupId>com.food.order.system</groupId>
+        <artifactId>order-domain-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>order-application-service</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>order-application</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>order-dataaccess</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>order-messaging</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>payment-domain-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- order-container는 다른 모듈에서 사용되지 않으므로 넣지 않음 -->
+    </dependencies>
+  </dependencyManagement>
   <dependencies></dependencies>
 
   <properties>
