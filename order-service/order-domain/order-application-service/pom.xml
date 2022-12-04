@@ -14,4 +14,11 @@
   <properties>
   </properties>
 
+  <!-- order-domain-core 호출 위해 종속성 추가 version은 최상위 pom.xml에 관리 -->
+  <dependencies>
+    <dependency>
+      <groupId>com.food.order.system</groupId>
+      <artifactId>order-domain-core</artifactId>
+    </dependency>
+  </dependencies>
 </project>
