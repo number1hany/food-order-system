@@ -30,8 +30,10 @@
 
   <!-- verion 명시 -->
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
   </properties>
+
 
   <build>
     <plugins>
