@@ -15,4 +15,12 @@
   <properties>
   </properties>
 
+  <!-- order-application-service 종속성 추가 (도메인의 출력 포트가 존재하므로) -->
+  <dependencies>
+    <dependency>
+      <groupId>com.food.order.system</groupId>
+      <artifactId>order-application-service</artifactId>
+    </dependency>
+  </dependencies>
+
 </project>
