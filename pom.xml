@@ -36,27 +36,27 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.food.ordering.system</groupId>
+        <groupId>com.food.order.system</groupId>
         <artifactId>order-application-service</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.food.ordering.system</groupId>
+        <groupId>com.food.order.system</groupId>
         <artifactId>order-application</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.food.ordering.system</groupId>
+        <groupId>com.food.order.system</groupId>
         <artifactId>order-dataaccess</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.food.ordering.system</groupId>
+        <groupId>com.food.order.system</groupId>
         <artifactId>order-messaging</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.food.ordering.system</groupId>
+        <groupId>com.food.order.system</groupId>
         <artifactId>payment-domain-core</artifactId>
         <version>${project.version}</version>
       </dependency>
