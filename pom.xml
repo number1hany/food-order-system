@@ -9,6 +9,7 @@
     <module>order-service/order-dataaccess</module>
     <module>order-service/order-messaging</module>
     <module>order-service/order-domain</module>
+    <module>order-service/order-container</module>
   </modules>
 
   <!-- 상위 스프링 부트로 지정 -->
