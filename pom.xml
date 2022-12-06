@@ -11,7 +11,8 @@
     <module>order-service/order-messaging</module>
     <module>order-service/order-domain</module>
     <module>order-service/order-container</module>
-    <module>common/common-domain</module>
+    <module>common</module>
+    <module>common/domain</module>
   </modules>
 
   <!-- 상위 스프링 부트로 지정 -->
@@ -65,7 +66,7 @@
 
       <dependency>
         <groupId>com.food.order.system</groupId>
-        <artifactId>common-domain</artifactId>
+        <artifactId>domain</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
