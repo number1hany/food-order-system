@@ -173,7 +173,7 @@ public class Order extends AggregateRoot<OrderId> {
    * 1) 결제가 취소된 경우 PENDING 상태로 변경
    * 2) 레스토랑에서 취소된 경우 결제 취소 후 PENDING 상태로 변경
    */
-  public void cancel() {
+  public void cancel(List<String> failureMessages) {
     if (orderStatus != OrderStatus.CANCELLING || orderStatus == OrderStatus.PENDING) {
       throw new OrderDomainException("Order is not in correct state for cancel operation!");
     }
