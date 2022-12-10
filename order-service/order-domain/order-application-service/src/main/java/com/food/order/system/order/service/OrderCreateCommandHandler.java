@@ -6,6 +6,7 @@ import com.food.order.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.order.system.order.service.domain.mapper.OrderDataMapper;
 import com.food.order.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -16,11 +17,14 @@ public class OrderCreateCommandHandler {
   private final OrderDataMapper orderDataMapper;
   private final OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher;
 
+  private final ApplicationEventPublisher applicationEventPublisher;
+
   public OrderCreateCommandHandler(OrderCreateHelper orderCreateHelper, OrderDataMapper orderDataMapper,
-      OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher) {
+      OrderCreatedPaymentRequestMessagePublisher orderCreatedPaymentRequestMessagePublisher, ApplicationEventPublisher applicationEventPublisher) {
     this.orderCreateHelper = orderCreateHelper;
     this.orderDataMapper = orderDataMapper;
     this.orderCreatedPaymentRequestMessagePublisher = orderCreatedPaymentRequestMessagePublisher;
+    this.applicationEventPublisher = applicationEventPublisher;
   }
 
   public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
@@ -29,6 +33,7 @@ public class OrderCreateCommandHandler {
         .getId()
         .getValue());
     orderCreatedPaymentRequestMessagePublisher.publish(orderCreatedEvent);
+    applicationEventPublisher.publishEvent(orderCreatedEvent);
     return orderDataMapper.orderToCreateOrderResponse(orderCreatedEvent.getOrder());
   }
 
