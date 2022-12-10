@@ -37,18 +37,19 @@ public class OrderTestConfiguration {
   }
 
   @Bean
-  public RestaurantRepository restaurantRepository() {
-    return Mockito.mock(RestaurantRepository.class);
+  public CustomerRepository customerRepository() {
+    return Mockito.mock(CustomerRepository.class);
   }
 
   @Bean
-  public CustomerRepository customerRepository() {
-    return Mockito.mock(CustomerRepository.class);
+  public RestaurantRepository restaurantRepository() {
+    return Mockito.mock(RestaurantRepository.class);
   }
 
   @Bean
   public OrderDomainService orderDomainService() {
     return new OrderDomainServiceImpl();
   }
+
 
 }
