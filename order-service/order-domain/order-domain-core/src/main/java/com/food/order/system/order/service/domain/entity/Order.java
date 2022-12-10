@@ -17,7 +17,7 @@ public class Order extends AggregateRoot<OrderId> {
 
   private final CustomerId customerId;
   private final RestaurantId restaurantId;
-  private final StreetAdress streetAdress;
+  private final StreetAdress deliveryAddress;
   private final Money price;
   private final List<OrderItem> items;
 
@@ -33,7 +33,7 @@ public class Order extends AggregateRoot<OrderId> {
     super.setId(builder.orderId);
     customerId = builder.customerId;
     restaurantId = builder.restaurantId;
-    streetAdress = builder.streetAdress;
+    deliveryAddress = builder.deliveryAddress;
     price = builder.price;
     items = builder.items;
     trackingId = builder.trackingId;
@@ -102,7 +102,7 @@ public class Order extends AggregateRoot<OrderId> {
   }
 
   public StreetAdress getStreetAdress() {
-    return streetAdress;
+    return deliveryAddress;
   }
 
   public Money getPrice() {
@@ -181,12 +181,16 @@ public class Order extends AggregateRoot<OrderId> {
     updateFailureMessages(failureMessages);
   }
 
+  public static Builder builder() {
+    return new Builder();
+  }
+
   public static final class Builder {
 
     private OrderId orderId;
     private CustomerId customerId;
     private RestaurantId restaurantId;
-    private StreetAdress streetAdress;
+    private StreetAdress deliveryAddress;
     private Money price;
     private List<OrderItem> items;
     private TrackingId trackingId;
@@ -194,10 +198,6 @@ public class Order extends AggregateRoot<OrderId> {
     private List<String> failureMessages;
 
     private Builder() {
-    }
-
-    public static Builder newBuilder() {
-      return new Builder();
     }
 
     public Builder orderId(OrderId val) {
@@ -215,8 +215,8 @@ public class Order extends AggregateRoot<OrderId> {
       return this;
     }
 
-    public Builder streetAdress(StreetAdress val) {
-      streetAdress = val;
+    public Builder deliveryAddress(StreetAdress val) {
+      deliveryAddress = val;
       return this;
     }
 
