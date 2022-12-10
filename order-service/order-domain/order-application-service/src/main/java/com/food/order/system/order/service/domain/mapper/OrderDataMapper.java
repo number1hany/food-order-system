@@ -3,6 +3,7 @@ package com.food.order.system.order.service.domain.mapper;
 import com.food.order.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.food.order.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.order.system.order.service.domain.dto.create.OrderAddress;
+import com.food.order.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.order.system.order.service.domain.entity.Order;
 import com.food.order.system.order.service.domain.entity.OrderItem;
 import com.food.order.system.order.service.domain.entity.Product;
@@ -39,6 +40,13 @@ public class OrderDataMapper {
         .build();
   }
 
+  public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+    return TrackOrderResponse.builder()
+        .orderTrackingId(order.getTrackingId().getValue())
+        .orderStatus(order.getOrderStatus())
+        .failureMessages(order.getFailureMessages())
+        .build();
+  }
   private List<OrderItem> orderItemsToOrderItemEntities(List<com.food.order.system.order.service.domain.dto.create.OrderItem> orderItems) {
     return orderItems.stream()
         .map(orderItem -> OrderItem.builder()
