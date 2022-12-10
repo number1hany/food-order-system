@@ -5,7 +5,7 @@ import com.food.order.system.order.service.domain.dto.message.RestaurantApproval
 /**
  * 레스토랑 승인을 위한 메세지 리스너
  */
-public interface RestaurantApprovalResponseMessageListner {
+public interface RestaurantApprovalResponseMessageListener {
   void orderApproved(RestaurantApprovalResponse restaurantApprovalResponse);
   void orderRejected(RestaurantApprovalResponse restaurantApprovalResponse);
 }
