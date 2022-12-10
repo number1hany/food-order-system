@@ -1,6 +1,5 @@
 package com.food.order.system.order.service.domain.dto.create;
 
-import com.food.order.system.order.service.domain.entity.OrderItem;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
