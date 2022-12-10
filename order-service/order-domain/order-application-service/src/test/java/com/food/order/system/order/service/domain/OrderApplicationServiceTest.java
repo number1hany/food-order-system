@@ -1,9 +1,12 @@
 package com.food.order.system.order.service.domain;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.food.order.system.order.service.domain.dto.create.CreateOrderCommand;
+import com.food.order.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.order.system.order.service.domain.dto.create.OrderAddress;
 import com.food.order.system.order.service.domain.dto.create.OrderItem;
 import com.food.order.system.order.service.domain.entity.Customer;
@@ -18,6 +21,7 @@ import com.food.order.system.order.service.domain.ports.output.repository.Restau
 import com.food.order.system.valueobject.CustomerId;
 import com.food.order.system.valueobject.Money;
 import com.food.order.system.valueobject.OrderId;
+import com.food.order.system.valueobject.OrderStatus;
 import com.food.order.system.valueobject.ProductId;
 import com.food.order.system.valueobject.RestaurantId;
 import java.math.BigDecimal;
@@ -25,12 +29,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@TestInstance(Lifecycle.PER_CLASS)
+
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(classes = OrderTestConfiguration.class)
 public class OrderApplicationServiceTest {
 
@@ -52,11 +58,10 @@ public class OrderApplicationServiceTest {
   private CreateOrderCommand createOrderCommand;
   private CreateOrderCommand createOrderCommandWrongPrice;
   private CreateOrderCommand createOrderCommandWrongProductPrice;
-
-  private final UUID CUSTOMER_ID = UUID.fromString("112f4f3c-4a34-42e7-97b9-d037384fe272");
-  private final UUID RESTAURANT_ID = UUID.fromString("212f4f3c-4a34-42e7-97b9-d037384fe272");
-  private final UUID PRODUCT_ID = UUID.fromString("312f4f3c-4a34-42e7-97b9-d037384fe272");
-  private final UUID ORDER_ID = UUID.fromString("412f4f3c-4a34-42e7-97b9-d037384fe272");
+  private final UUID CUSTOMER_ID = UUID.fromString("d215b5f8-0249-4dc5-89a3-51fd148cfb41");
+  private final UUID RESTAURANT_ID = UUID.fromString("d215b5f8-0249-4dc5-89a3-51fd148cfb45");
+  private final UUID PRODUCT_ID = UUID.fromString("d215b5f8-0249-4dc5-89a3-51fd148cfb48");
+  private final UUID ORDER_ID = UUID.fromString("15a497c1-0f4b-4eff-b9f4-c402c8c07afb");
   private final BigDecimal PRICE = new BigDecimal("200.00");
 
   @BeforeAll
@@ -149,6 +154,13 @@ public class OrderApplicationServiceTest {
     when(orderRepository.save(any(Order.class))).thenReturn(order);
   }
 
+  @Test
+  public void testCreateOrder() {
+    CreateOrderResponse createOrderResponse = orderApplicationService.createOrder(createOrderCommand);
+    assertEquals(createOrderResponse.getOrderStatus(), OrderStatus.PENDING);
+    assertEquals(createOrderResponse.getMessage(), "Order created successfully");
+    assertNotNull(createOrderResponse.getOrderTrackingId());
+  }
 
 }
 
