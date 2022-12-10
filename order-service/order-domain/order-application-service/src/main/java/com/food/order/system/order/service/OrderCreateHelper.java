@@ -1,8 +1,7 @@
-package com.food.order.system;
+package com.food.order.system.order.service;
 
 import com.food.order.system.order.service.domain.OrderDomainService;
 import com.food.order.system.order.service.domain.dto.create.CreateOrderCommand;
-import com.food.order.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.order.system.order.service.domain.entity.Customer;
 import com.food.order.system.order.service.domain.entity.Order;
 import com.food.order.system.order.service.domain.entity.Restaurant;
@@ -20,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
-public class OrderCreateCommandHandler {
+public class OrderCreateHelper {
 
   private final OrderDomainService orderDomainService;
   private final OrderRepository orderRepository;
@@ -28,7 +27,7 @@ public class OrderCreateCommandHandler {
   private final RestaurantRepository restaurantRepository;
   private final OrderDataMapper orderDataMapper;
 
-  public OrderCreateCommandHandler(OrderDomainService orderDomainService, OrderRepository orderRepository, CustomerRepository customerRepository,
+  public OrderCreateHelper(OrderDomainService orderDomainService, OrderRepository orderRepository, CustomerRepository customerRepository,
       RestaurantRepository restaurantRepository, OrderDataMapper orderDataMapper) {
     this.orderDomainService = orderDomainService;
     this.orderRepository = orderRepository;
@@ -38,15 +37,16 @@ public class OrderCreateCommandHandler {
   }
 
   @Transactional
-  public CreateOrderResponse createOrder(CreateOrderCommand createOrderCommand) {
+  public OrderCreatedEvent persistOrder(CreateOrderCommand createOrderCommand) {
     checkCustomer(createOrderCommand.getCustomerId());
     Restaurant restaurant = checkRestaurant(createOrderCommand);
     Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
     OrderCreatedEvent orderCreatedEvent = orderDomainService.validateAndInitiateOrder(order, restaurant);
-    Order orderResult = saveOrder(order);
-    log.info("Order is created with id: {}", orderResult.getId().getValue());
-    return orderDataMapper.orderToCreateOrderResponse(orderResult);
+    saveOrder(order);
+    log.info("Order is created with id: {}", orderCreatedEvent.getOrder().getId().getValue());
+    return orderCreatedEvent;
   }
+
 
   private Restaurant checkRestaurant(CreateOrderCommand createOrderCommand) {
     Restaurant restaurant = orderDataMapper.createOrderCommandToRestaurant(createOrderCommand);
