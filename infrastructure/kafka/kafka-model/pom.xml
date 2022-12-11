@@ -37,5 +37,12 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro-maven-plugin</artifactId>
+      <version>${avro.version}</version>
+    </dependency>
+  </dependencies>
   <artifactId>kafka-model</artifactId>
 </project>
