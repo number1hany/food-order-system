@@ -13,6 +13,7 @@
     <module>order-service/order-container</module>
     <module>common</module>
     <module>common/domain</module>
+    <module>infrastructure</module>
   </modules>
 
   <!-- 상위 스프링 부트로 지정 -->
