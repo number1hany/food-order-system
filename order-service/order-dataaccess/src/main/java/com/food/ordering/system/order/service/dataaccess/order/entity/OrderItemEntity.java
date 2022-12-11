@@ -1,7 +1,6 @@
 package com.food.ordering.system.order.service.dataaccess.order.entity;
 
 
-import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.UUID;
