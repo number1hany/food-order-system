@@ -4,7 +4,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>order-domain</artifactId>
-    <groupId>com.food.order.system</groupId>
+    <groupId>com.food.ordering.system</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -17,11 +17,11 @@
   <!-- order-domain-core 호출 위해 종속성 추가 version은 최상위 pom.xml에 관리 -->
   <dependencies>
     <dependency>
-      <groupId>com.food.order.system</groupId>
+      <groupId>com.food.ordering.system</groupId>
       <artifactId>order-domain-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.food.order.system</groupId>
+      <groupId>com.food.ordering.system</groupId>
       <artifactId>domain</artifactId>
     </dependency>
     <dependency>
