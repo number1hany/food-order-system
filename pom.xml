@@ -11,8 +11,8 @@
     <module>order-service/order-messaging</module>
     <module>order-service/order-domain</module>
     <module>order-service/order-container</module>
-    <module>common</module>
-    <module>common/domain</module>
+    <module>common/common-domain</module>
+    <module>common/common-application</module>
     <module>infrastructure</module>
     <module>infrastructure/kafka</module>
   </modules>
@@ -91,6 +91,11 @@
       <dependency>
         <groupId>com.food.ordering.system</groupId>
         <artifactId>kafka-config-data</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.food.ordering.system</groupId>
+        <artifactId>common-application</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!-- order-container는 다른 모듈에서 사용되지 않으므로 넣지 않음 -->
