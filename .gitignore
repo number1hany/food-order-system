@@ -11,6 +11,9 @@ target/
 *.iws
 *.iml
 *.ipr
+.idea/encodings.xml
+.idea/uiDesigner.xml
+.idea/workspace.xml
 
 ### Eclipse ###
 .apt_generated
@@ -36,5 +39,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
-.idea/encodings.xml
-.idea/*
+
+### infrastructure
+/infrastructure/docker-compose/volumes/**
