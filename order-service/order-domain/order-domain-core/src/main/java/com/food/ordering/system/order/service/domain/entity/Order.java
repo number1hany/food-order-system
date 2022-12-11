@@ -25,6 +25,7 @@ public class Order extends AggregateRoot<OrderId> {
   private OrderStatus orderStatus;
   private List<String> failureMessages;
 
+  public static final String FAILURE_MESSAGE_DELIMITER = ",";
   /**
    * 생성자는 private 이므로, Builder를 사용해서 값을 주입해야함
    * @param builder
@@ -101,7 +102,7 @@ public class Order extends AggregateRoot<OrderId> {
     return restaurantId;
   }
 
-  public StreetAdress getStreetAdress() {
+  public StreetAdress getDeliveryAddress() {
     return deliveryAddress;
   }
 
