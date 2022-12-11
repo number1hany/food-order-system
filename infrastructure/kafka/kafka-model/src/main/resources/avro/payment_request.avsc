@@ -1,0 +1,59 @@
+{
+    "namespace": "com.food.ordering.system.kafka.order.avro.model", // 자바 패키지 네임
+    "type": "record",
+    "name": "PaymentRequestAvroModel", // 자바 클래스 네임
+    "fields": [
+        {
+            "name": "id",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        },
+        {
+            "name": "sagaId",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        },
+        {
+            "name": "customerId",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        },
+        {
+            "name": "orderId",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid"
+            }
+        },
+        {
+            "name": "price",
+            "type": {
+                "type": "bytes",
+                "logicalType": "decimal",
+                "precision": 10,
+                "scale": 2
+            }
+        },
+        {
+            "name": "createdAt",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis"
+            }
+        },
+        {
+            "name": "paymentOrderStatus",
+            "type": {
+                  "type": "enum",
+                  "name": "PaymentOrderStatus",
+                  "symbols": ["PENDING", "CANCELLED"]
+               }
+        }
+    ]
+}

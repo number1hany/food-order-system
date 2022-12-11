@@ -9,5 +9,33 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.avro</groupId>
+        <artifactId>avro-maven-plugin</artifactId>
+        <version>${avro.version}</version>
+        <configuration>
+          <stringType>String</stringType>
+          <enableDecimalLogicalType>true</enableDecimalLogicalType> <!-- 10진수 활성화 -->
+        </configuration>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>schema</goal>
+            </goals>
+            <configuration>
+              <sourceDirectory> <!-- avro schema 파일 -->
+                src/main/resources/avro
+              </sourceDirectory>
+              <outputDirectory>src/main/java</outputDirectory> <!-- 출력 디렉토리 -->
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
   <artifactId>kafka-model</artifactId>
 </project>
