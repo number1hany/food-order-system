@@ -8,7 +8,9 @@ import com.food.ordering.system.order.service.domain.ports.output.message.publis
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
+import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -21,6 +23,26 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
 
   @Override
   public void publish(OrderCreatedEvent domainEvent) {
+    String orderId = domainEvent.getOrder().getId().getValue().toString();
+    log.info("Received OrderCreatedEvent for order id: {}", orderId);
 
+    PaymentRequestAvroModel paymentRequestAvroModel = orderMessagingDataMapper.orderCreatedEventToPaymentRequestAvroModel(domainEvent);
+    kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(), orderId, paymentRequestAvroModel,
+        getKafkaCallback(orderServiceConfigData.getPaymentResponseTopicName(), paymentRequestAvroModel));
+  }
+
+  private ListenableFutureCallback<SendResult<String, PaymentRequestAvroModel>> getKafkaCallback(String paymentResponseTopicName,
+      PaymentRequestAvroModel paymentRequestAvroModel) {
+    return new ListenableFutureCallback<SendResult<String, PaymentRequestAvroModel>>() {
+      @Override
+      public void onFailure(Throwable ex) {
+        log.error("Error while sending paymentRequestAvroModel");
+      }
+
+      @Override
+      public void onSuccess(SendResult<String, PaymentRequestAvroModel> result) {
+
+      }
+    };
   }
 }
