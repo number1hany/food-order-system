@@ -23,7 +23,7 @@ public class OrderMessagingDataMapper {
         .build();
   }
 
-  public PaymentRequestAvroModel orderCreatedEventToPaymentRequestAvroModel(OrderCancelledEvent orderCancelledEvent) {
+  public PaymentRequestAvroModel orderCancelledEventToPaymentRequestAvroModel(OrderCancelledEvent orderCancelledEvent) {
     Order order = orderCancelledEvent.getOrder();
     return PaymentRequestAvroModel.newBuilder()
         .setId(UUID.randomUUID().toString())
