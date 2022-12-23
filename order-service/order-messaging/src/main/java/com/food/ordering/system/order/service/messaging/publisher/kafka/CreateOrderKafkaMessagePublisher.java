@@ -1,4 +1,4 @@
-package com.food.ordering.system.order.service.messaging.listener.kafka;
+package com.food.ordering.system.order.service.messaging.publisher.kafka;
 
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
@@ -32,7 +32,8 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
     try {
       PaymentRequestAvroModel paymentRequestAvroModel = orderMessagingDataMapper.orderCreatedEventToPaymentRequestAvroModel(domainEvent);
       kafkaProducer.send(orderServiceConfigData.getPaymentRequestTopicName(), orderId, paymentRequestAvroModel,
-          orderKafkaMessageHelper.getKafkaCallback(orderServiceConfigData.getPaymentResponseTopicName(), paymentRequestAvroModel));
+          orderKafkaMessageHelper.getKafkaCallback(orderServiceConfigData.getPaymentResponseTopicName(), paymentRequestAvroModel, orderId,
+              "PaymentRequestAvroModel"));
 
       log.info("PaymentRequestAvroModel send to kafka order id: {}",
           paymentRequestAvroModel.getOrderId());
@@ -41,28 +42,5 @@ public class CreateOrderKafkaMessagePublisher implements OrderCreatedPaymentRequ
           "to kafka with order id: {}, error: {}", orderId, e.getMessage());
     }
 
-  }
-
-  private ListenableFutureCallback<SendResult<String, PaymentRequestAvroModel>> getKafkaCallback(String paymentResponseTopicName,
-      PaymentRequestAvroModel paymentRequestAvroModel) {
-    return new ListenableFutureCallback<SendResult<String, PaymentRequestAvroModel>>() {
-      @Override
-      public void onFailure(Throwable ex) {
-        log.error("Error while sending paymentRequestAvroModel" +
-            "message {} to topic {}", paymentRequestAvroModel.toString(), paymentResponseTopicName, ex);
-      }
-
-      @Override
-      public void onSuccess(SendResult<String, PaymentRequestAvroModel> result) {
-        RecordMetadata metadata = result.getRecordMetadata();
-        log.info("Received successful response from Kafka for order id: {}" +
-                "Topic: {} Partition: {} Offset: {} Timestamp: {}",
-            paymentRequestAvroModel.getOrderId(),
-            metadata.topic(),
-            metadata.partition(),
-            metadata.offset(),
-            metadata.timestamp());
-      }
-    };
   }
 }
