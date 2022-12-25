@@ -39,6 +39,32 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
     </dependency>
-
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
   </dependencies>
+
+  <!-- jar 파일 생성하기 위한 spring boot maven plugin -->
+  <build>
+    <plugins>
+      <plugin><groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <!-- docker image를 띄우기 위한 image name -->
+        <configuration>
+          <image>
+            <name>${project.groupId}/order.service:${project.version}</name>
+          </image>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>build-image</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

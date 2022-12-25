@@ -2,19 +2,23 @@ package com.food.ordering.system.order.service.messaging.mapper;
 
 import com.food.ordering.system.kafka.order.avro.model.PaymentOrderStatus;
 import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel;
+import com.food.ordering.system.kafka.order.avro.model.PaymentResponseAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.Product;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.order.avro.model.RestaurantOrderStatus;
+import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
+import com.food.ordering.system.valueobject.PaymentStatus;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 @Component
 public class OrderMessagingDataMapper {
+
   public PaymentRequestAvroModel orderCreatedEventToPaymentRequestAvroModel(OrderCreatedEvent orderCreatedEvent) {
     Order order = orderCreatedEvent.getOrder();
     return PaymentRequestAvroModel.newBuilder()
@@ -57,6 +61,20 @@ public class OrderMessagingDataMapper {
         .setPrice(order.getPrice().getAmount())
         .setCreatedAt(orderPaidEvent.getCreatedAt().toInstant())
         .setRestaurantOrderStatus(RestaurantOrderStatus.PAID)
+        .build();
+  }
+
+  public PaymentResponse paymentResponseAvroModelToPaymentResponse(PaymentResponseAvroModel paymentResponseAvroModel) {
+    return PaymentResponse.builder()
+        .id(paymentResponseAvroModel.getId())
+        .sagaId(paymentResponseAvroModel.getSagaId())
+        .paymentId(paymentResponseAvroModel.getPaymentId())
+        .customerId(paymentResponseAvroModel.getCustomerId())
+        .orderId(paymentResponseAvroModel.getOrderId())
+        .price(paymentResponseAvroModel.getPrice())
+        .createdAt(paymentResponseAvroModel.getCreatedAt())
+        .paymentStatus(PaymentStatus.valueOf(paymentResponseAvroModel.getPaymentStatus().name()))
+        .failureMessages(paymentResponseAvroModel.getFailureMessages())
         .build();
   }
 }
