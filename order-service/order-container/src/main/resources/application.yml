@@ -1,0 +1,70 @@
+# server
+server:
+  port: 8181
+
+# log
+logging:
+  level:
+    com.food.ordering.system: DEBUG
+
+# kafka topic
+order-service:
+  payment-request-topic-name: payment-request
+  payment-response-topic-name: payment-response
+  restaurant-approval-request-topic-name: restaurant-approval-request
+  restaurant-approval-response-topic-name: restaurant-approval-response
+
+# spring jpa & datasource
+spring:
+  jpa:
+    open-in-view: false # 영속 컨텍스트 비활성화
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL9Dialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order&binaryTransfer=ture&reWriteBatchedInserts=true&stringtype=unspecified
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    schema: classpath:init-schema.sql
+    initialization-mode: always
+
+kafka-config:
+  bootstrap-servers: localhost:19092, localhost:29092, localhost:39092 # 브로커 주소 설정
+  schema-registry-url-key: schema.registry.url # docker-compose
+  schema-registry-url: http://localhost:8081
+  num-of-partitions: 3 # 파티션 수 , 개의 consumer 사용 가능
+  replication-factor: 3 # 복제된 상태를 유지
+
+kafka-producer-config:
+  key-serializer-class: org.apache.kafka.common.serialization.StringSerializer # 문자열 변환기
+  value-serializer-class: io.confluent.kafka.serializers.KafkaAvroSerializer # Avro 직렬화
+  compression-type: snappy
+  acks: all # produce 이전 각 브로커의 승인을 기다림
+  batch-size: 16384 # 배치 사이즈
+  batch-size-boost-factor: 100
+  linger-ms: 5 # 부하 있을 때 배치 크리를 늘려 produce 효율 늘림
+  request-timeout-ms: 60000 # 요청 시간, 카프카 브로커에서 응답이 없는 경우
+  retry-count: 5 # 재시도 횟수, 오류가 발생한 경우
+
+kafka-consumer-config:
+  key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+  payment-consumer-group-id: payment-topic-consumer
+  restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
+  auto-offset-reset: earliest
+  specific-avro-reader-key: specific.avro.reader
+  specific-avro-reader: true
+  batch-listener: true
+  auto-startup: true
+  concurrency-level: 3
+  session-timeout-ms: 10000
+  heartbeat-interval-ms: 3000
+  max-poll-interval-ms: 300000
+  max-poll-records: 500
+  max-partition-fetch-bytes-default: 1048576
+  max-partition-fetch-bytes-boost-factor: 1
+  poll-timeout-ms: 150
