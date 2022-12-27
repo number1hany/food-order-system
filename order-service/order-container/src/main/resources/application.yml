@@ -48,7 +48,7 @@ kafka-producer-config:
   batch-size-boost-factor: 100
   linger-ms: 5 # 부하 있을 때 배치 크리를 늘려 produce 효율 늘림
   request-timeout-ms: 60000 # 요청 시간, 카프카 브로커에서 응답이 없는 경우
-  retry-count: 5 # 재시도 횟수, 오류가 발생한 경우 
+  retry-count: 5 # 재시도 횟수, 오류가 발생한 경우
 
 kafka-consumer-config:
   key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -60,7 +60,7 @@ kafka-consumer-config:
   specific-avro-reader: true
   batch-listener: true
   auto-startup: true
-  concurrency-level: 3
+  concurrency-level: 3 
   session-timeout-ms: 10000
   heartbeat-interval-ms: 3000
   max-poll-interval-ms: 300000
