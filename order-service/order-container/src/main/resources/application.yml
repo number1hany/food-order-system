@@ -55,16 +55,16 @@ kafka-consumer-config:
   value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
   payment-consumer-group-id: payment-topic-consumer
   restaurant-approval-consumer-group-id: restaurant-approval-topic-consumer
-  auto-offset-reset: earliest
+  auto-offset-reset: earliest # 파티션의 시작부분부터 읽음
   specific-avro-reader-key: specific.avro.reader
   specific-avro-reader: true
   batch-listener: true
-  auto-startup: true
-  concurrency-level: 3
-  session-timeout-ms: 10000
+  auto-startup: true # 자동 시작
+  concurrency-level: 3 # 동시성 레벨(파티션 개수와 같게 설정)
+  session-timeout-ms: 10000 # 10초
   heartbeat-interval-ms: 3000
-  max-poll-interval-ms: 300000
-  max-poll-records: 500
+  max-poll-interval-ms: 300000 # 스레드용 처리시간에 따라 설정
+  max-poll-records: 500 # 한 번에 최대 레코드를 가지고 올 수 있는 양
   max-partition-fetch-bytes-default: 1048576
   max-partition-fetch-bytes-boost-factor: 1
-  poll-timeout-ms: 150
+  poll-timeout-ms: 150 # 데이터가 없으면 기다리는 시간 
